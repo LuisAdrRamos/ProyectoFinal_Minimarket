@@ -1,11 +1,9 @@
 import com.mongodb.client.*;
 import org.bson.Document;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
 public class LOGIN {
     public JPanel LOGIN;
@@ -46,6 +44,18 @@ public class LOGIN {
                             } else {
                                 System.out.println("Usuario o contraseña incorrecta");
                             }
+                            JFrame login = new JFrame();
+                            login.dispose();
+
+                            JFrame menu = new JFrame();
+                            menu.setContentPane(new menuAdmin().menuAdmin);
+                            menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                            menu.pack();
+                            menu.setSize(400, 400);
+                            menu.setLocationRelativeTo(null);
+                            menu.setVisible(true);
+                            new menuAdmin();
+
                         }
                         break;
 
