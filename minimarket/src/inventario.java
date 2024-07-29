@@ -56,7 +56,7 @@ public class inventario {
                     currentFrame.setVisible(false);
                 }
 
-                JFrame MenuAdminFrame = new JFrame("Agregar Cajeros");
+                JFrame MenuAdminFrame = new JFrame("Inventario de Productos");
                 MenuAdminFrame.setContentPane(new menuAdmin().menuAdmin);
                 MenuAdminFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 MenuAdminFrame.pack();
@@ -109,6 +109,14 @@ public class inventario {
             nombreTxt.setText(producto.getString("nombre"));
             cantidadTxt.setText(String.valueOf(producto.getInteger("cantidad")));
             precioTxt.setText(String.valueOf(producto.getDouble("precio")));
+
+            String imagePath = producto.getString("img");
+            if (imagePath != null && !imagePath.isEmpty()) {
+                ImageIcon imageIcon = new ImageIcon(imagePath);
+                productImg.setIcon(imageIcon);
+            } else {
+                productImg.setIcon(null);
+            }
         }
     }
 }
