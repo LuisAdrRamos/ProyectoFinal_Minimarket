@@ -42,7 +42,7 @@ public class menuAdmin {
                 inventarioFrame.setContentPane(new inventario().Inventaio);
                 inventarioFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 inventarioFrame.pack();
-                inventarioFrame.setSize(400, 400);
+                inventarioFrame.setSize(600, 500);
                 inventarioFrame.setLocationRelativeTo(null);
                 inventarioFrame.setVisible(true);
             }
@@ -60,7 +60,7 @@ public class menuAdmin {
                 historialFrame.setContentPane(new historial().HistVentas);
                 historialFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 historialFrame.pack();
-                historialFrame.setSize(400, 400);
+                historialFrame.setSize(600, 500);
                 historialFrame.setLocationRelativeTo(null);
                 historialFrame.setVisible(true);
             }
@@ -78,7 +78,7 @@ public class menuAdmin {
                 agregarCajerosFrame.setContentPane(new AgregarCajeros().ACajeros);
                 agregarCajerosFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 agregarCajerosFrame.pack();
-                agregarCajerosFrame.setSize(400, 400);
+                agregarCajerosFrame.setSize(600, 500);
                 agregarCajerosFrame.setLocationRelativeTo(null);
                 agregarCajerosFrame.setVisible(true);
             }
