@@ -7,6 +7,7 @@ import org.bson.Document;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class inventario {
     private JButton anteriorProductoButton;
     private JButton siguienteProductoButton;
     private JLabel productImg;
+    private JButton actualizarInventarioButton;
 
     private List<Document> productos;
     private int currentIndex;
@@ -83,6 +85,12 @@ public class inventario {
                     currentIndex--;
                     displayProducto(currentIndex);
                 }
+            }
+        });
+        actualizarInventarioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
     }
