@@ -15,10 +15,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import javax.imageio.ImageIO;
 
 import com.itextpdf.text.Font;
@@ -159,8 +157,8 @@ public class menuCajeros {
                         MongoCollection<Document> collection = database.getCollection("productos");
 
                         StringBuilder recibo = new StringBuilder();
-                        recibo.append("Compra realizada con éxito.\n\n");
-                        recibo.append("Productos comprados:\n");
+                        recibo.append("Minimarket La T U C A\n\n");
+                        recibo.append("\tProductos comprados:\n");
 
                         for (Map.Entry<String, Integer> entry : carrito.entrySet()) {
                             String codigo = entry.getKey();
@@ -176,11 +174,11 @@ public class menuCajeros {
                                 String nombre = producto.getString("nombre");
                                 double precio = producto.getDouble("precio");
 
-                                recibo.append(String.format("Producto: %s, Cantidad: %d, Precio: %.2f\n", nombre, cantidad, precio * cantidad));
+                                recibo.append(String.format("\tProducto: %s\t\n Cantidad: %d\t\n Precio: $ %.2f\n\n", nombre, cantidad, precio * cantidad));
                             }
                         }
 
-                        recibo.append(String.format("\nTotal: %.2f", total));
+                        recibo.append(String.format("\nTotal: $ %.2f", total));
                         createPDF("recibo.pdf", recibo.toString());
 
                         carrito.clear();
@@ -196,12 +194,17 @@ public class menuCajeros {
             }
         });
     }
-
+    private String generateUniqueFilename(String baseFilename) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        String timestamp = sdf.format(new Date());
+        return baseFilename.replace(".pdf", "_" + timestamp + ".pdf");
+    }
     private void createPDF(String dest, String text) {
         try {
+            String uniqueDest = generateUniqueFilename(dest);
 
             com.itextpdf.text.Document document = new com.itextpdf.text.Document();
-            PdfWriter.getInstance(document, new FileOutputStream(dest));
+            PdfWriter.getInstance(document, new FileOutputStream(uniqueDest));
 
             document.open();
 
@@ -209,6 +212,8 @@ public class menuCajeros {
             document.add(new Paragraph(text, font));
 
             document.close();
+
+            System.out.println("PDF creado: " + uniqueDest);
         } catch (Exception e) {
             e.printStackTrace();
         }
