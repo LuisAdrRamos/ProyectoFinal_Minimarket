@@ -13,12 +13,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.imageio.ImageIO;
+
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 
 public class menuCajeros {
     public JPanel menuCaja;
@@ -153,6 +158,10 @@ public class menuCajeros {
                         MongoDatabase database = mongoClient.getDatabase("proyecto_minimarket");
                         MongoCollection<Document> collection = database.getCollection("productos");
 
+                        StringBuilder recibo = new StringBuilder();
+                        recibo.append("Compra realizada con éxito.\n\n");
+                        recibo.append("Productos comprados:\n");
+
                         for (Map.Entry<String, Integer> entry : carrito.entrySet()) {
                             String codigo = entry.getKey();
                             int cantidad = entry.getValue();
@@ -163,14 +172,22 @@ public class menuCajeros {
                             if (producto != null) {
                                 int stockActual = producto.getInteger("cantidad");
                                 collection.updateOne(query, new Document("$set", new Document("cantidad", stockActual - cantidad)));
+
+                                String nombre = producto.getString("nombre");
+                                double precio = producto.getDouble("precio");
+
+                                recibo.append(String.format("Producto: %s, Cantidad: %d, Precio: %.2f\n", nombre, cantidad, precio * cantidad));
                             }
                         }
+
+                        recibo.append(String.format("\nTotal: %.2f", total));
+                        createPDF("recibo.pdf", recibo.toString());
 
                         carrito.clear();
                         total = 0.0;
                         totalTxt.setText("Total: 0.00");
 
-                        JOptionPane.showMessageDialog(null, "Compra realizada con éxito.");
+                        JOptionPane.showMessageDialog(null, "Compra realizada con éxito. El recibo se ha guardado como 'recibo.pdf'.");
                     } catch (Exception ex) {
                         ex.printStackTrace();
                         JOptionPane.showMessageDialog(null, "Error al finalizar la compra.");
@@ -178,6 +195,23 @@ public class menuCajeros {
                 }
             }
         });
+    }
+
+    private void createPDF(String dest, String text) {
+        try {
+
+            com.itextpdf.text.Document document = new com.itextpdf.text.Document();
+            PdfWriter.getInstance(document, new FileOutputStream(dest));
+
+            document.open();
+
+            Font font = new Font(Font.FontFamily.HELVETICA, 12, Font.NORMAL);
+            document.add(new Paragraph(text, font));
+
+            document.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private List<Document> fetchProductosFromDB() {
