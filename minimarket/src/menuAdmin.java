@@ -38,7 +38,7 @@ public class menuAdmin {
                     currentFrame.setVisible(false);
                 }
 
-                JFrame inventarioFrame = new JFrame("Agregar Cajeros");
+                JFrame inventarioFrame = new JFrame("Inventario");
                 inventarioFrame.setContentPane(new inventario().Inventaio);
                 inventarioFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 inventarioFrame.pack();
@@ -56,7 +56,7 @@ public class menuAdmin {
                     currentFrame.setVisible(false);
                 }
 
-                JFrame historialFrame = new JFrame("Agregar Cajeros");
+                JFrame historialFrame = new JFrame("Historial de Ventas");
                 historialFrame.setContentPane(new historial().HistVentas);
                 historialFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 historialFrame.pack();

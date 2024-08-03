@@ -3,13 +3,17 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+import org.bson.types.Binary;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
 
 public class inventario {
     public JPanel Inventaio;
@@ -22,30 +26,12 @@ public class inventario {
     private JButton siguienteProductoButton;
     private JLabel productImg;
     private JButton actualizarInventarioButton;
+    private JButton agrergarProductosButton;
 
     private List<Document> productos;
     private int currentIndex;
 
     public inventario() {
-
-        try {
-            String imagePath = "imagenes/inventario1.png";
-            ImageIcon imageIcon = new ImageIcon(imagePath);
-            productImg.setIcon(imageIcon);
-
-            String imagePath2 = "imagenes/ventas.png";
-            ImageIcon imageIcon2 = new ImageIcon(imagePath2);
-            productImg.setIcon(imageIcon2);
-
-            String imagePath3 = "imagenes/cajero.png";
-            ImageIcon imageIcon3 = new ImageIcon(imagePath3);
-            productImg.setIcon(imageIcon3);
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         productos = fetchProductosFromDB();
         currentIndex = 0;
         displayProducto(currentIndex);
@@ -58,7 +44,7 @@ public class inventario {
                     currentFrame.setVisible(false);
                 }
 
-                JFrame MenuAdminFrame = new JFrame("Inventario de Productos");
+                JFrame MenuAdminFrame = new JFrame("Menu Administrador");
                 MenuAdminFrame.setContentPane(new menuAdmin().menuAdmin);
                 MenuAdminFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 MenuAdminFrame.pack();
@@ -90,7 +76,35 @@ public class inventario {
         actualizarInventarioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(Inventaio);
+                if (currentFrame != null) {
+                    currentFrame.setVisible(false);
+                }
 
+                JFrame inventarioFrame = new JFrame("Actualizar Inventario");
+                inventarioFrame.setContentPane(new ActualizarInventario().UpdateInv);
+                inventarioFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                inventarioFrame.pack();
+                inventarioFrame.setSize(600, 500);
+                inventarioFrame.setLocationRelativeTo(null);
+                inventarioFrame.setVisible(true);
+            }
+        });
+        agrergarProductosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(Inventaio);
+                if (currentFrame != null) {
+                    currentFrame.setVisible(false);
+                }
+
+                JFrame inventarioFrame = new JFrame("Agregar Productos");
+                inventarioFrame.setContentPane(new AgregrarProductos().AgreProd);
+                inventarioFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                inventarioFrame.pack();
+                inventarioFrame.setSize(600, 500);
+                inventarioFrame.setLocationRelativeTo(null);
+                inventarioFrame.setVisible(true);
             }
         });
     }
@@ -118,10 +132,18 @@ public class inventario {
             cantidadTxt.setText(String.valueOf(producto.getInteger("cantidad")));
             precioTxt.setText(String.valueOf(producto.getDouble("precio")));
 
-            String imagePath = producto.getString("img");
-            if (imagePath != null && !imagePath.isEmpty()) {
-                ImageIcon imageIcon = new ImageIcon(imagePath);
-                productImg.setIcon(imageIcon);
+            Object imgField = producto.get("img");
+            if (imgField instanceof Binary) {
+                Binary imgBinary = (Binary) imgField;
+                byte[] imgBytes = imgBinary.getData();
+
+                try (ByteArrayInputStream bais = new ByteArrayInputStream(imgBytes)) {
+                    BufferedImage img = ImageIO.read(bais);
+                    ImageIcon imageIcon = new ImageIcon(img);
+                    productImg.setIcon(imageIcon);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else {
                 productImg.setIcon(null);
             }

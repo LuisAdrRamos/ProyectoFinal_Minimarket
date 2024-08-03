@@ -58,10 +58,10 @@
       </component>
       <component id="aa108" class="javax.swing.JLabel">
         <constraints>
-          <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Precio:"/>
+          <text value="Precio:                  $"/>
         </properties>
       </component>
       <component id="87af8" class="javax.swing.JLabel">
@@ -141,7 +141,15 @@
           <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Actualizar inventario"/>
+          <text value="Actualizar Productos"/>
+        </properties>
+      </component>
+      <component id="c2b48" class="javax.swing.JButton" binding="agrergarProductosButton" default-binding="true">
+        <constraints>
+          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Agrergar Productos"/>
         </properties>
       </component>
     </children>

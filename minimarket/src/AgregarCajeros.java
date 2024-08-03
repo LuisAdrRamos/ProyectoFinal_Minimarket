@@ -46,23 +46,19 @@ public class AgregarCajeros {
                 }
 
                 Cajeros nuevoCajero = new Cajeros(username, password);
-                agregarCajeroADB(nuevoCajero);
+                try (MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017/")) {
+                    MongoDatabase database = mongoClient.getDatabase("proyecto_minimarket");
+                    MongoCollection<Document> collection = database.getCollection("cajeros");
+
+                    Document document = nuevoCajero.toDocument();
+                    collection.insertOne(document);
+
+                    JOptionPane.showMessageDialog(null, "Cajero agregado exitosamente.");
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Error al agregar el cajero.");
+                }
             }
         });
-    }
-
-    private void agregarCajeroADB(Cajeros cajero) {
-        try (MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017/")) {
-            MongoDatabase database = mongoClient.getDatabase("proyecto_minimarket");
-            MongoCollection<Document> collection = database.getCollection("cajeros");
-
-            Document document = cajero.toDocument();
-            collection.insertOne(document);
-
-            JOptionPane.showMessageDialog(null, "Cajero agregado exitosamente.");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error al agregar el cajero.");
-        }
     }
 }

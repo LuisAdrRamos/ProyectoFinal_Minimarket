@@ -1,3 +1,5 @@
+import org.bson.Document;
+
 public class Productos {
     String codigo;
     String nombre;

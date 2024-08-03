@@ -10,7 +10,7 @@ public class Main {
         login.setLocationRelativeTo(null);
         login.setVisible(true);*/
 
-        JFrame menu = new JFrame();
+        JFrame menu = new JFrame("Menu Administrador");
         menu.setContentPane(new menuAdmin().menuAdmin);
         menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         menu.pack();
