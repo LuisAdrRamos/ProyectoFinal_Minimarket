@@ -1,3 +1,5 @@
+package ADMINISTRADOR;
+
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -45,12 +47,18 @@ public class AgregarCajeros {
                     return;
                 }
 
-                Cajeros nuevoCajero = new Cajeros(username, password);
                 try (MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017/")) {
                     MongoDatabase database = mongoClient.getDatabase("proyecto_minimarket");
                     MongoCollection<Document> collection = database.getCollection("cajeros");
 
-                    Document document = nuevoCajero.toDocument();
+                    Document query = new Document("user", username);
+                    if (collection.find(query).first() != null) {
+                        JOptionPane.showMessageDialog(null, "El nombre de usuario ya existe.");
+                        return;
+                    }
+
+                    Document document = new Document("user", username)
+                            .append("password", password);
                     collection.insertOne(document);
 
                     JOptionPane.showMessageDialog(null, "Cajero agregado exitosamente.");

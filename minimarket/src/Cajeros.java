@@ -27,8 +27,4 @@ public class Cajeros {
     public void setPassC(String passC) {
         this.passC = passC;
     }
-
-    public Document toDocument() {
-        return new Document("user",userC).append("password",passC);
-    }
 }

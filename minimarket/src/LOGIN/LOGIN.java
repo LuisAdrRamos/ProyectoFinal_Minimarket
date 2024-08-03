@@ -1,3 +1,7 @@
+package LOGIN;
+
+import ADMINISTRADOR.menuAdmin;
+import CAJERO.menuCajeros;
 import com.mongodb.client.*;
 import org.bson.Document;
 import javax.swing.*;
@@ -7,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.net.URL;
 
 public class LOGIN {
-    public JPanel LOGIN;
+    public JPanel Login;
     private JButton iniciarSesiónButton;
     private JPasswordField passwordText;
     private JTextField userText;
@@ -41,7 +45,7 @@ public class LOGIN {
                                 String pass = (String) documents.first().get("password");
 
                                 if (user.equals(username) && pass.equals(password)) {
-                                    JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(LOGIN);
+                                    JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(Login);
                                     if (currentFrame != null) {
                                         currentFrame.setVisible(false);
                                     }
@@ -76,7 +80,7 @@ public class LOGIN {
                                 String pass = (String) documents.first().get("password");
 
                                 if (user.equals(username) && pass.equals(password)) {
-                                    JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(LOGIN);
+                                    JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(Login);
                                     if (currentFrame != null) {
                                         currentFrame.setVisible(false);
                                     }
@@ -102,6 +106,6 @@ public class LOGIN {
     }
 
     public Container LOGIN() {
-        return LOGIN;
+        return Login;
     }
 }

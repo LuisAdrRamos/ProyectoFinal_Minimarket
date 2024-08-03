@@ -1,3 +1,6 @@
+package ADMINISTRADOR;
+
+import LOGIN.LOGIN;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -83,6 +86,7 @@ public class menuAdmin {
                 agregarCajerosFrame.setVisible(true);
             }
         });
+
         cerrarSesionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -100,8 +104,6 @@ public class menuAdmin {
                 loginFrame.setVisible(true);
             }
         });
-
-
     }
 }
 
