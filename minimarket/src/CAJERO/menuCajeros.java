@@ -7,7 +7,6 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bson.types.Binary;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,10 +17,11 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.imageio.ImageIO;
-
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.mongodb.client.model.FindOneAndUpdateOptions;
+import com.mongodb.client.model.ReturnDocument;
 
 public class menuCajeros {
     public JPanel menuCaja;
@@ -155,9 +155,13 @@ public class menuCajeros {
                     try (MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017/")) {
                         MongoDatabase database = mongoClient.getDatabase("proyecto_minimarket");
                         MongoCollection<Document> collection = database.getCollection("productos");
+                        MongoCollection<Document> ventasCollection = database.getCollection("ventas");
+
+                        int numeroVenta = getNextVentaId(database);
 
                         StringBuilder recibo = new StringBuilder();
                         recibo.append("Minimarket La T U C A\n\n");
+                        recibo.append("Venta No: ").append(numeroVenta).append("\n\n");
                         recibo.append("\tProductos comprados:\n");
 
                         for (Map.Entry<String, Integer> entry : carrito.entrySet()) {
@@ -179,7 +183,14 @@ public class menuCajeros {
                         }
 
                         recibo.append(String.format("\nTotal: $ %.2f", total));
-                        createPDF("recibo.pdf", recibo.toString());
+                        String pdfPath = createPDF("recibo.pdf", recibo.toString());
+
+                        Document venta = new Document("ventaID", numeroVenta)
+                                .append("productos", carrito)
+                                .append("total", total)
+                                .append("pdf", pdfPath)
+                                .append("fecha", new Date());
+                        ventasCollection.insertOne(venta);
 
                         carrito.clear();
                         total = 0.0;
@@ -194,12 +205,23 @@ public class menuCajeros {
             }
         });
     }
+
+    private int getNextVentaId(MongoDatabase database) {
+        MongoCollection<Document> contadorCollection = database.getCollection("contadorVentas");
+        Document query = new Document("_id", "ventaId");
+        Document update = new Document("$inc", new Document("seq", 1));
+        FindOneAndUpdateOptions options = new FindOneAndUpdateOptions().returnDocument(ReturnDocument.AFTER).upsert(true);
+        Document result = contadorCollection.findOneAndUpdate(query, update, options);
+        return result == null ? 1 : result.getInteger("seq");
+    }
+
     private String generateUniqueFilename(String baseFilename) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         String timestamp = sdf.format(new Date());
         return baseFilename.replace(".pdf", "_" + timestamp + ".pdf");
     }
-    private void createPDF(String dest, String text) {
+
+    private String createPDF(String dest, String text) {
         try {
             String uniqueDest = generateUniqueFilename(dest);
 
@@ -214,9 +236,11 @@ public class menuCajeros {
             document.close();
 
             System.out.println("PDF creado: " + uniqueDest);
+            return uniqueDest;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     private List<Document> fetchProductosFromDB() {
