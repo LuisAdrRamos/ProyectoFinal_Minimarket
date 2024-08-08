@@ -23,6 +23,9 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.mongodb.client.model.ReturnDocument;
 
+/**
+ * Clase que representa el menú de cajeros en el minimarket.
+ */
 public class menuCajeros {
     public JPanel menuCaja;
     private JButton anteriorButton;
@@ -43,6 +46,9 @@ public class menuCajeros {
     private double total;
     private Map<String, Integer> carrito;
 
+    /**
+     * Constructor de la clase menuCajeros que inicializa los componentes y establece las acciones de los botones.
+     */
     public menuCajeros() {
         productos = fetchProductosFromDB();
         currentIndex = 0;
@@ -206,6 +212,12 @@ public class menuCajeros {
         });
     }
 
+    /**
+     * Obtiene el siguiente ID de venta de la base de datos.
+     *
+     * @param database La base de datos MongoDB.
+     * @return El siguiente ID de venta.
+     */
     private int getNextVentaId(MongoDatabase database) {
         MongoCollection<Document> contadorCollection = database.getCollection("contadorVentas");
         Document query = new Document("_id", "ventaId");
@@ -215,12 +227,25 @@ public class menuCajeros {
         return result == null ? 1 : result.getInteger("seq");
     }
 
+    /**
+     * Genera un nombre de archivo único usando la fecha y hora actual.
+     *
+     * @param baseFilename El nombre base del archivo.
+     * @return El nombre de archivo único generado.
+     */
     private String generateUniqueFilename(String baseFilename) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         String timestamp = sdf.format(new Date());
         return baseFilename.replace(".pdf", "_" + timestamp + ".pdf");
     }
 
+    /**
+     * Crea un archivo PDF con el texto proporcionado.
+     *
+     * @param dest El destino del archivo PDF.
+     * @param text El texto a incluir en el PDF.
+     * @return La ruta del archivo PDF creado.
+     */
     private String createPDF(String dest, String text) {
         try {
             String uniqueDest = generateUniqueFilename(dest);
@@ -243,6 +268,11 @@ public class menuCajeros {
         return null;
     }
 
+    /**
+     * Obtiene una lista de productos desde la base de datos.
+     *
+     * @return La lista de productos.
+     */
     private List<Document> fetchProductosFromDB() {
         List<Document> productosList = new ArrayList<>();
 
@@ -257,6 +287,11 @@ public class menuCajeros {
         return productosList;
     }
 
+    /**
+     * Muestra los datos del producto en el índice especificado.
+     *
+     * @param index El índice del producto a mostrar.
+     */
     private void displayProducto(int index) {
         if (index >= 0 && index < productos.size()) {
             Document producto = productos.get(index);
@@ -264,6 +299,11 @@ public class menuCajeros {
         }
     }
 
+    /**
+     * Muestra los datos del producto en los campos correspondientes.
+     *
+     * @param producto El documento del producto a mostrar.
+     */
     private void mostrarDatosProducto(Document producto) {
         codigoTxt.setText(producto.getString("codigo"));
         nombretxt.setText(producto.getString("nombre"));
@@ -287,3 +327,4 @@ public class menuCajeros {
         }
     }
 }
+
