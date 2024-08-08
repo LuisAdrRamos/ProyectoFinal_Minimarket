@@ -1,6 +1,3 @@
-Aquí tienes la documentación usando JavaDoc para la clase `Productos` sin realizar modificaciones en el código:
-
-```java
 import org.bson.Document;
 
 /**
@@ -101,14 +98,6 @@ public class Productos {
      * 
      * @param cantidad La cantidad del producto.
      */
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
-}
-```
-
-Esta documentación proporciona descripciones claras para la clase, los constructores y los métodos, lo que facilita la comprensión y el uso de esta clase en otros proyectos.
-
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
