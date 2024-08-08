@@ -16,6 +16,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Clase que representa la interfaz para agregar productos al inventario del minimarket.
+ */
 public class AgregrarProductos {
     private JButton regresarButton;
     private JTextField codigoTxt;
@@ -29,6 +32,9 @@ public class AgregrarProductos {
     private JFileChooser fileChooser;
     private byte[] imgBytes;
 
+    /**
+     * Constructor de la clase AgregrarProductos que inicializa los componentes y establece las acciones de los botones.
+     */
     public AgregrarProductos() {
         fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
