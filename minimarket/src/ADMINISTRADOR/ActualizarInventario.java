@@ -21,6 +21,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase que representa la interfaz para actualizar productos en el inventario del minimarket.
+ */
 public class ActualizarInventario {
     public JPanel UpdateInv;
     private JButton regresarButton;
@@ -38,6 +41,9 @@ public class ActualizarInventario {
     private List<Document> productos;
     private int currentIndex;
 
+    /**
+     * Constructor de la clase ActualizarInventario que inicializa los componentes y establece las acciones de los botones.
+     */
     public ActualizarInventario() {
         productos = fetchProductosFromDB();
         currentIndex = 0;
@@ -133,6 +139,7 @@ public class ActualizarInventario {
                 MenuAdminFrame.setVisible(true);
             }
         });
+
         anteriorButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -142,6 +149,7 @@ public class ActualizarInventario {
                 }
             }
         });
+
         siguienteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -153,13 +161,18 @@ public class ActualizarInventario {
         });
     }
 
+    /**
+     * Obtiene una lista de productos desde la base de datos.
+     *
+     * @return La lista de productos.
+     */
     private List<Document> fetchProductosFromDB() {
         List<Document> productosList = new ArrayList<>();
 
         try (MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017/")) {
             System.out.println("Conexion establecida");
             MongoDatabase database = mongoClient.getDatabase("proyecto_minimarket");
-            MongoCollection collection = database.getCollection("productos");
+            MongoCollection<Document> collection = database.getCollection("productos");
 
             for (Object doc : collection.find()) {
                 productosList.add((Document) doc);
@@ -168,6 +181,11 @@ public class ActualizarInventario {
         return productosList;
     }
 
+    /**
+     * Muestra los datos del producto en el índice especificado.
+     *
+     * @param index El índice del producto a mostrar.
+     */
     private void displayProducto(int index) {
         if (index >= 0 && index < productos.size()) {
             Document producto = productos.get(index);
