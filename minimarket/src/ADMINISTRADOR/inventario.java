@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
 
+/**
+ * Clase que representa el inventario de productos en el minimarket.
+ */
 public class inventario {
     public JPanel Inventaio;
     private JButton button1;
@@ -33,6 +36,9 @@ public class inventario {
     private List<Document> productos;
     private int currentIndex;
 
+    /**
+     * Constructor de la clase inventario que inicializa los componentes y establece las acciones de los botones.
+     */
     public inventario() {
         productos = fetchProductosFromDB();
         currentIndex = 0;
@@ -75,6 +81,7 @@ public class inventario {
                 }
             }
         });
+
         actualizarInventarioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -92,6 +99,7 @@ public class inventario {
                 inventarioFrame.setVisible(true);
             }
         });
+
         agrergarProductosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -111,21 +119,31 @@ public class inventario {
         });
     }
 
+    /**
+     * Obtiene una lista de productos desde la base de datos.
+     *
+     * @return La lista de productos.
+     */
     private List<Document> fetchProductosFromDB() {
         List<Document> productosList = new ArrayList<>();
 
         try (MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017/")) {
             System.out.println("Conexion establecida");
             MongoDatabase database = mongoClient.getDatabase("proyecto_minimarket");
-            MongoCollection collection = database.getCollection("productos");
+            MongoCollection<Document> collection = database.getCollection("productos");
 
-            for (Object doc : collection.find()) {
-                productosList.add((Document) doc);
+            for (Document doc : collection.find()) {
+                productosList.add(doc);
             }
         }
         return productosList;
     }
 
+    /**
+     * Muestra los datos del producto en el índice especificado.
+     *
+     * @param index El índice del producto a mostrar.
+     */
     private void displayProducto(int index) {
         if (index >= 0 && index < productos.size()) {
             Document producto = productos.get(index);
