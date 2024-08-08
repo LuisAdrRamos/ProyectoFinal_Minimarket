@@ -10,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 
+/**
+ * Clase que maneja el proceso de login para administradores y cajeros.
+ */
 public class LOGIN {
     public JPanel Login;
     private JButton iniciarSesiónButton;
@@ -18,12 +21,15 @@ public class LOGIN {
     private JComboBox modosBox;
     private JLabel img;
 
+    /**
+     * Constructor de la clase LOGIN que inicializa los componentes y establece las acciones de los botones.
+     */
     public LOGIN() {
-        try{
+        try {
             URL url = new URL("https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small/user-icon-on-transparent-background-free-png.png");
             ImageIcon icon = new ImageIcon(url);
             img.setIcon(icon);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -35,7 +41,7 @@ public class LOGIN {
                         try (MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017/")) {
                             System.out.println("Conexion establecida");
                             MongoDatabase database = mongoClient.getDatabase("proyecto_minimarket");
-                            MongoCollection collection = database.getCollection("administradores");
+                            MongoCollection<Document> collection = database.getCollection("administradores");
                             String username = userText.getText();
                             String password = passwordText.getText();
                             FindIterable<Document> documents = collection.find(new Document("user", userText.getText()).append("password", passwordText.getText()));
@@ -58,10 +64,9 @@ public class LOGIN {
                                     menu.setLocationRelativeTo(null);
                                     menu.setVisible(true);
                                     new menuAdmin();
-
                                 }
                             } else {
-                                JOptionPane.showMessageDialog(null,"Usuario o contraseña incorrecta");
+                                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
                             }
                         }
                         break;
@@ -70,7 +75,7 @@ public class LOGIN {
                         try (MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017/")) {
                             System.out.println("Conexion establecida");
                             MongoDatabase database = mongoClient.getDatabase("proyecto_minimarket");
-                            MongoCollection collection = database.getCollection("cajeros");
+                            MongoCollection<Document> collection = database.getCollection("cajeros");
                             String username = userText.getText();
                             String password = passwordText.getText();
                             FindIterable<Document> documents = collection.find(new Document("user", userText.getText()).append("password", passwordText.getText()));
@@ -93,10 +98,9 @@ public class LOGIN {
                                     menu.setLocationRelativeTo(null);
                                     menu.setVisible(true);
                                     new menuAdmin();
-
                                 }
                             } else {
-                                JOptionPane.showMessageDialog(null,"Usuario o contraseña incorrecta");
+                                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
                             }
                         }
                         break;
@@ -105,6 +109,11 @@ public class LOGIN {
         });
     }
 
+    /**
+     * Método que retorna el contenedor principal de la interfaz de login.
+     *
+     * @return El contenedor principal de la interfaz de login.
+     */
     public Container LOGIN() {
         return Login;
     }
