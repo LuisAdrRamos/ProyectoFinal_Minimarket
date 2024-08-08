@@ -10,6 +10,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Clase que representa la interfaz para agregar cajeros en el minimarket.
+ */
 public class AgregarCajeros {
     public JPanel ACajeros;
     private JButton agregarCajeroButton;
@@ -17,6 +20,9 @@ public class AgregarCajeros {
     private JTextField textField2;
     private JButton menuPrincipalButton;
 
+    /**
+     * Constructor de la clase AgregarCajeros que inicializa los componentes y establece las acciones de los botones.
+     */
     public AgregarCajeros() {
         menuPrincipalButton.addActionListener(new ActionListener() {
             @Override
