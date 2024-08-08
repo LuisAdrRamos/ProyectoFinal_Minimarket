@@ -5,6 +5,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Clase que representa el menú del administrador en el minimarket.
+ */
 public class menuAdmin {
     private JButton historialDeVentasButton;
     public JPanel menuAdmin;
@@ -15,6 +18,9 @@ public class menuAdmin {
     private JLabel imgHistorial;
     private JLabel imgACajeros;
 
+    /**
+     * Constructor de la clase menuAdmin que inicializa los componentes y establece las acciones de los botones.
+     */
     public menuAdmin() {
         try {
             String imagePath = "imagenes/inventario1.png";
@@ -28,11 +34,10 @@ public class menuAdmin {
             String imagePath3 = "imagenes/cajero.png";
             ImageIcon imageIcon3 = new ImageIcon(imagePath3);
             imgACajeros.setIcon(imageIcon3);
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         actualizarInventarioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -106,4 +111,3 @@ public class menuAdmin {
         });
     }
 }
-
