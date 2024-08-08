@@ -3,16 +3,19 @@
 
 ## Índice
 
-1. [Login](#login)
-2. [MenuAdmin](#menuadmin)
-3. [Cajeros](#cajeros)
-4. [Productos](#productos)
-5. [Inventario](#inventario)
-6. [Agregar Productos](#agregar-productos)
-7. [Agregar Cajeros](#agregar-cajeros)
-8. [Actualizar Inventario](#actualizar-inventario)
-9. [Historial de Ventas](#historial-de-ventas)
+1. [Documento con las ejecuciones y formato para el código](#Documento)
+2. [Login](#login)
+3. [MenuAdmin](#menuadmin)
+4. [Cajeros](#cajeros)
+5. [Productos](#productos)
+6. [Inventario](#inventario)
+7. [Agregar Productos](#agregar-productos)
+8. [Agregar Cajeros](#agregar-cajeros)
+9. [Actualizar Inventario](#actualizar-inventario)
+10. [Historial de Ventas](#historial-de-ventas)
 
+### Documento
+![Documento](imagenes/ProyectoFinalMinimarket.pdf)
 ## Imágenes
 
 ### Productos
