@@ -2,9 +2,8 @@
 # Proyecto Minimarket
 
 ## Índice
-
-1. [Documento ](#Documento)<br><br>
-  En este documento se encuentran las ejecuciones del programa y sus respectivos formatos de manera resumida 
+En este documento se encuentran las ejecuciones del programa y sus respectivos formatos de manera resumida <br><br>
+1. [Documento ](#Documento)
 2. [Login](#login)
 3. [MenuAdmin](#menuadmin)
 4. [Cajeros](#cajeros)
