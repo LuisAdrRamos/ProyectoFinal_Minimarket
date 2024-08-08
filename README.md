@@ -2,7 +2,7 @@
 # Proyecto Minimarket
 
 ## Índice
-En este documento se encuentran las ejecuciones del programa y sus respectivos formatos de manera resumida <br><br>
+    En este documento se encuentran las ejecuciones del programa y sus respectivos formatos de manera resumida <br>
 1. [Documento ](#Documento)
 2. [Login](#login)
 3. [MenuAdmin](#menuadmin)
