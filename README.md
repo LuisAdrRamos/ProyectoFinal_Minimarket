@@ -3,7 +3,8 @@
 
 ## Índice
 
-1. [Documento con las ejecuciones y formato para el código](#Documento)
+1. [Documento ](#Documento)
+  En este documento se encuentran las ejecuciones del programa y sus respectivos formatos de manera resumida 
 2. [Login](#login)
 3. [MenuAdmin](#menuadmin)
 4. [Cajeros](#cajeros)
