@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Clase que representa el historial de ventas en el minimarket.
+ */
 public class historial {
     public JPanel HistVentas;
     private JButton menuPrincipalButton;
@@ -31,6 +34,9 @@ public class historial {
     private List<Document> recibos;
     private int currentIndex;
 
+    /**
+     * Constructor de la clase historial que inicializa los componentes y establece las acciones de los botones.
+     */
     public historial() {
         currentIndex = 0;
         recibos = fetchVentasFromDB();
@@ -100,6 +106,11 @@ public class historial {
         });
     }
 
+    /**
+     * Obtiene una lista de ventas desde la base de datos.
+     *
+     * @return La lista de ventas.
+     */
     private List<Document> fetchVentasFromDB() {
         List<Document> ventasList = new ArrayList<>();
 
@@ -114,6 +125,11 @@ public class historial {
         return ventasList;
     }
 
+    /**
+     * Muestra los datos del recibo en el índice especificado.
+     *
+     * @param index El índice del recibo a mostrar.
+     */
     private void displayRecibo(int index) {
         if (index >= 0 && index < recibos.size()) {
             Document recibo = recibos.get(index);
@@ -133,3 +149,4 @@ public class historial {
         }
     }
 }
+
