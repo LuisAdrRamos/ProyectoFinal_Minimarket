@@ -65,7 +65,7 @@ public class AgregrarProductos {
                 String cantidad = cantidadTxt.getText();
                 String precio = precioTxt.getText();
 
-                if (codigo.isEmpty() || nombre.isEmpty() || cantidad.isEmpty() || precio.isEmpty() || imgBytes == null) {
+                if (codigo.isEmpty() || nombre.isEmpty() || cantidad.isEmpty() || precio.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos y seleccione una imagen.");
                     return;
                 }
